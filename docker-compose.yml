@@ -1,7 +1,7 @@
 version: "3.9"
 services:
  system-service:
-  image: ThomasDeboel/basisprojectapi
+  image: thomasdeboel/basisprojectapi
 
 
   ports:
