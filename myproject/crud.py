@@ -4,34 +4,33 @@ import models
 import schemas
 
 
-def get_user(db: Session, user_id: int):
-    return db.query(models.User).filter(models.User.id == user_id).first()
+def get_program(db: Session, platform_id: int):
+    return db.query(models.Platform).filter(models.Platform.id == platform_id).first()
 
 
-def get_user_by_email(db: Session, email: str):
-    return db.query(models.User).filter(models.User.email == email).first()
+def get_program_by_name(db: Session, name: str):
+    return db.query(models.Platform).filter(models.Platform.name == name).first()
 
 
-def get_users(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.User).offset(skip).limit(limit).all()
+def get_platforms(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.Platform).offset(skip).limit(limit).all()
 
 
-def create_user(db: Session, user: schemas.UserCreate):
-    fake_hashed_password = user.password + "notreallyhashed"
-    db_user = models.User(email=user.email, hashed_password=fake_hashed_password)
-    db.add(db_user)
+def create_platform(db: Session, platform: schemas.PlatformCreate):
+    db_platform = models.Platform(name=platform.name)
+    db.add(db_platform)
     db.commit()
-    db.refresh(db_user)
-    return db_user
+    db.refresh(db_platform)
+    return db_platform
 
 
-def get_items(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Item).offset(skip).limit(limit).all()
+def get_games(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.Game).offset(skip).limit(limit).all()
 
 
-def create_user_item(db: Session, item: schemas.ItemCreate, user_id: int):
-    db_item = models.Item(**item.dict(), owner_id=user_id)
-    db.add(db_item)
+def create_platform_game(db: Session, game: schemas.GameCreate, platform_id: int):
+    db_game = models.Game(**game.dict(), platform_id=platform_id)
+    db.add(db_game)
     db.commit()
-    db.refresh(db_item)
-    return db_item
+    db.refresh(db_game)
+    return db_game

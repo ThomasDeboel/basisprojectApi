@@ -1,35 +1,36 @@
 from pydantic import BaseModel
 
 
-class ItemBase(BaseModel):
+class GameBase(BaseModel):
     title: str
     description: str | None = None
 
 
-class ItemCreate(ItemBase):
+class GameCreate(GameBase):
     pass
 
 
-class Item(ItemBase):
+class Game(GameBase):
     id: int
-    owner_id: int
+    platform_id: int
+    is_installed: bool
 
     class Config:
         orm_mode = True
 
 
-class UserBase(BaseModel):
-    email: str
+class PlatformBase(BaseModel):
+    name: str
 
 
-class UserCreate(UserBase):
-    password: str
+class PlatformCreate(PlatformBase):
+    pass
 
 
-class User(UserBase):
+class Platform(PlatformBase):
     id: int
     is_active: bool
-    items: list[Item] = []
+    gamelist: list[Game] = []
 
     class Config:
         orm_mode = True

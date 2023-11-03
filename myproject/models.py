@@ -4,23 +4,22 @@ from sqlalchemy.orm import relationship
 from database import Base
 
 
-class User(Base):
-    __tablename__ = "users"
+class Platform(Base):
+    __tablename__ = "program"
 
     id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, unique=True, index=True)
-    hashed_password = Column(String)
-    is_active = Column(Boolean, default=True)
+    name = Column(String, unique=True, index=True)
 
-    items = relationship("Item", back_populates="owner")
+    gamelist = relationship("Games", back_populates="platform")
 
 
-class Item(Base):
-    __tablename__ = "items"
+class Game(Base):
+    __tablename__ = "game"
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, index=True)
     description = Column(String, index=True)
-    owner_id = Column(Integer, ForeignKey("users.id"))
+    is_installed = Column(Boolean, default=False)
+    platform_id = Column(Integer, ForeignKey("program.id"))
 
-    owner = relationship("User", back_populates="items")
+    platform = relationship("Platform", back_populates="gamename")
