@@ -50,14 +50,14 @@ def read_user(platform_id: int, db: Session = Depends(get_db)):
     return db_user
 
 
-@app.post("/users/{user_id}/items/", response_model=schemas.Item)
+@app.post("/platforms/{platform_id}/games/", response_model=schemas.Game)
 def create_item_for_user(
     platform_id: int, game_id: schemas.GameCreate, db: Session = Depends(get_db)
 ):
     return crud.create_platform_game(db=db, game=game_id, platform_id=platform_id)
 
 
-@app.get("/items/", response_model=list[schemas.Game])
-def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    items = crud.get_games(db, skip=skip, limit=limit)
-    return items
+@app.get("/games/", response_model=list[schemas.Game])
+def read_games(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    games = crud.get_games(db, skip=skip, limit=limit)
+    return games
