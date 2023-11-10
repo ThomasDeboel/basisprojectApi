@@ -5,7 +5,7 @@ from database import Base
 
 
 class Platform(Base):
-    __tablename__ = "program"
+    __tablename__ = "platforms"
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, index=True)
@@ -14,7 +14,7 @@ class Platform(Base):
 
 
 class Game(Base):
-    __tablename__ = "game"
+    __tablename__ = "games"
 
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, index=True)
