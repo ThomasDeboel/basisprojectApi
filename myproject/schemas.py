@@ -29,7 +29,7 @@ class PlatformCreate(PlatformBase):
 
 class Platform(PlatformBase):
     id: int
-    gamelist: list[Game] = []
+    games: list[Game] = []
 
     class Config:
         orm_mode = True
