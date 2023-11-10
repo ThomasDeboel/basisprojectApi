@@ -29,7 +29,6 @@ class PlatformCreate(PlatformBase):
 
 class Platform(PlatformBase):
     id: int
-    is_active: bool
     gamelist: list[Game] = []
 
     class Config:
