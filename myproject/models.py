@@ -10,7 +10,7 @@ class Platform(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, index=True)
 
-    gamelist = relationship("Game", back_populates="platform")
+    gamelist = relationship("Game", back_populates="platform_owner")
 
 
 class Game(Base):
@@ -20,6 +20,6 @@ class Game(Base):
     title = Column(String, index=True)
     description = Column(String, index=True)
     is_installed = Column(Boolean, default=False)
-    platform_id = Column(Integer, ForeignKey("platforms.id"))
+    platform_owner_id = Column(Integer, ForeignKey("platforms.id"))
 
-    platform = relationship("Platform", back_populates="gamelist")
+    platform_owner = relationship("Platform", back_populates="gamelist")
