@@ -22,4 +22,4 @@ class Game(Base):
     is_installed = Column(Boolean, default=False)
     platform_id = Column(Integer, ForeignKey("program.id"))
 
-    platform = relationship("Platform", back_populates="gamename")
+    platform = relationship("Platform", back_populates="gamelist")
