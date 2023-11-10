@@ -10,7 +10,7 @@ class Platform(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, index=True)
 
-    gamelist = relationship("Game", back_populates="platform_owner")
+    games = relationship("Game", back_populates="platform_owner")
 
 
 class Game(Base):
