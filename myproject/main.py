@@ -29,11 +29,11 @@ def get_db():
 
 
 @app.post("/platforms/", response_model=schemas.Platform)
-def create_platform(platform: schemas.PlatformCreate, db: Session = Depends(get_db)):
-    db_platform = crud.get_program_by_name(db, name=platform.name)
+def create_platform(platforms: schemas.PlatformCreate, db: Session = Depends(get_db)):
+    db_platform = crud.get_program_by_name(db, name=platforms.name)
     if db_platform:
         raise HTTPException(status_code=400, detail="Platform name already exist")
-    return crud.create_platform(db=db, platform=platform)
+    return crud.create_platform(db=db, platform=platforms)
 
 
 @app.get("/platforms/", response_model=list[schemas.Platform])
