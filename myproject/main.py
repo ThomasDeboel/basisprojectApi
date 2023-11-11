@@ -1,4 +1,5 @@
 from fastapi import Depends, FastAPI, HTTPException
+from fastapi.responses import HTMLResponse
 from sqlalchemy.orm import Session
 
 import os
@@ -26,7 +27,23 @@ def get_db():
         yield db
     finally:
         db.close()
-
+@app.get("/", response_class=HTMLResponse)
+async def read_items():
+    return """
+    <html><head>
+    <title>Home page for Thomas's API </title>
+    </head>
+    <body>
+    <h1> Home page of Thomas's API</h1>
+    <ul>
+    <li> <a href="/docs">Documentation</a></li>
+    <li> <a href="/redoc">ReDoc</a></li>
+    <li> <a href="/platforms/">Platforms</a></li>
+    <li> <a href="/games/">Games</a></li>
+    </ul>
+    </body>
+    </html>
+    """
 
 @app.post("/platforms/", response_model=schemas.Platform)
 def create_platform(platforms: schemas.PlatformCreate, db: Session = Depends(get_db)):
@@ -61,3 +78,11 @@ def create_item_for_user(
 def read_games(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     games = crud.get_games(db, skip=skip, limit=limit)
     return games
+
+@app.delete("/platforms/{platform_id}/games/{game_id}", response_model=schemas.Game)
+def delete_game(platform_id: int, game_id: int, db: Session = Depends(get_db)):
+    db_game = crud.delete_game(db=db, game_id=game_id)
+    if db_game is None:
+        raise HTTPException(status_code=404, detail="Game not found")
+    return db_game
+
