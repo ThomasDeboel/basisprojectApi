@@ -44,7 +44,6 @@ async def read_items():
     </body>
     </html>
     """
-
 @app.post("/platforms/", response_model=schemas.Platform)
 def create_platform(platforms: schemas.PlatformCreate, db: Session = Depends(get_db)):
     db_platform = crud.get_program_by_name(db, name=platforms.name)
