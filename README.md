@@ -35,10 +35,10 @@ This project is about managing and tracking video games and the platforms on whi
 - `DELETE /platforms/{platform_id}/games/{game_id}`: Delete a specific game for a specific platform
 ![Screenshot 6: Delete /platforms/{platform_id}/games/{game_id}](./Screens/delete_game_1.png)
 
-- Full Fast API Docs page
-![Screenshot 7: Full page screenshot](./Screens/Full_page.png)
+- Full Fast API Docs on Okteto
+![Screenshot 7: Full page screenshot](./Screens/FastApiOkt.png)
 
-- Small extra home page on okteto
+- Small extra home page on Okteto
 ![Screenshot 8: screenshot of home page of my api](./Screens/homeOkt.png)
 
 - Okteto environment 
