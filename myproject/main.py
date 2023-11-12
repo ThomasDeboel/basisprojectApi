@@ -27,23 +27,8 @@ def get_db():
         yield db
     finally:
         db.close()
-@app.get("/", response_class=HTMLResponse)
-async def read_items():
-    return """
-    <html><head>
-    <title>Home page for Thomas's API </title>
-    </head>
-    <body>
-    <h1> Home page of Thomas's API</h1>
-    <ul>
-    <li> <a href="/docs">Documentation</a></li>
-    <li> <a href="/redoc">ReDoc</a></li>
-    <li> <a href="/platforms/">Platforms</a></li>
-    <li> <a href="/games/">Games</a></li>
-    </ul>
-    </body>
-    </html>
-    """
+
+
 @app.post("/platforms/", response_model=schemas.Platform)
 def create_platform(platforms: schemas.PlatformCreate, db: Session = Depends(get_db)):
     db_platform = crud.get_program_by_name(db, name=platforms.name)
@@ -55,6 +40,7 @@ def create_platform(platforms: schemas.PlatformCreate, db: Session = Depends(get
 @app.get("/platforms/", response_model=list[schemas.Platform])
 def read_platforms(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     platforms = crud.get_platforms(db, skip=skip, limit=limit)
+
     return platforms
 
 
@@ -70,6 +56,8 @@ def read_platforms(platform_id: int, db: Session = Depends(get_db)):
 def create_game_for_platform(
     platform_id: int, game_id: schemas.GameCreate, db: Session = Depends(get_db)
 ):
+    if crud.get_program(db, platform_id=platform_id) is None:
+        raise HTTPException(status_code=404, detail="Platform not found")
     return crud.create_platform_game(db=db, game=game_id, platform_id=platform_id)
 
 

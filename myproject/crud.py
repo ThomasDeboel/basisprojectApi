@@ -34,3 +34,9 @@ def create_platform_game(db: Session, game: schemas.GameCreate, platform_id: int
     db.commit()
     db.refresh(db_game)
     return db_game
+
+def delete_game(db: Session, game_id: int):
+    db_game = db.query(models.Game).filter(models.Game.id == game_id).first()
+    db.delete(db_game)
+    db.commit()
+    return db_game
