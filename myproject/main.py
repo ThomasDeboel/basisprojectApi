@@ -53,21 +53,21 @@ def create_platform(platforms: schemas.PlatformCreate, db: Session = Depends(get
 
 
 @app.get("/platforms/", response_model=list[schemas.Platform])
-def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_platforms(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     platforms = crud.get_platforms(db, skip=skip, limit=limit)
     return platforms
 
 
 @app.get("/platforms/{platform_id}", response_model=schemas.Platform)
-def read_user(platform_id: int, db: Session = Depends(get_db)):
-    db_user = crud.get_program(db, platform_id=platform_id)
-    if db_user is None:
+def read_platforms(platform_id: int, db: Session = Depends(get_db)):
+    db_platform = crud.get_program(db, platform_id=platform_id)
+    if db_platform is None:
         raise HTTPException(status_code=404, detail="Platform not found")
-    return db_user
+    return db_platform
 
 
 @app.post("/platforms/{platform_id}/games/", response_model=schemas.Game)
-def create_item_for_user(
+def create_game_for_platform(
     platform_id: int, game_id: schemas.GameCreate, db: Session = Depends(get_db)
 ):
     return crud.create_platform_game(db=db, game=game_id, platform_id=platform_id)

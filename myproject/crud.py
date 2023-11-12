@@ -29,7 +29,7 @@ def get_games(db: Session, skip: int = 0, limit: int = 100):
 
 
 def create_platform_game(db: Session, game: schemas.GameCreate, platform_id: int):
-    db_game = models.Game(**game.dict(), platform_id=platform_id)
+    db_game = models.Game(**game.dict(), platform_owner_id=platform_id)
     db.add(db_game)
     db.commit()
     db.refresh(db_game)

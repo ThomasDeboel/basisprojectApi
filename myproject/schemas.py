@@ -12,8 +12,7 @@ class GameCreate(GameBase):
 
 class Game(GameBase):
     id: int
-    platform_id: int
-    is_installed: bool
+    platform_owner_id: int
 
     class Config:
         orm_mode = True
